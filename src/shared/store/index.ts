@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import { setupListeners } from '@reduxjs/toolkit/query';
+import { baseUrl } from '../../shared/constants/urls';
+import { axiosBaseQuery } from 'axiosConfig';
 
 export const baseApi = createApi({
   reducerPath: 'pokemonApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://pokeapi.co/api/v2/' }),
+  baseQuery: axiosBaseQuery({ baseUrl }),
   // Just any baseline
   refetchOnReconnect: true,
   endpoints: () => ({}),
