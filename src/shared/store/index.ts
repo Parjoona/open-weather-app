@@ -2,10 +2,10 @@ import { configureStore } from '@reduxjs/toolkit';
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { baseUrl } from '../../shared/constants/urls';
-import { axiosBaseQuery } from 'axiosConfig';
+import { axiosBaseQuery } from '../../axiosConfig';
 
 export const baseApi = createApi({
-  reducerPath: 'pokemonApi',
+  reducerPath: 'api',
   baseQuery: axiosBaseQuery({ baseUrl }),
   // Just any baseline
   refetchOnReconnect: true,

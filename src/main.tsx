@@ -6,6 +6,7 @@ import { MantineProvider } from '@mantine/core';
 
 import { setAxiosDefaults } from './axiosConfig';
 import { store } from './shared/store';
+
 import routes from './routes';
 
 setAxiosDefaults();

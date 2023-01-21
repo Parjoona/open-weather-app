@@ -29,7 +29,7 @@ const Navbar: FC<IProps> = ({ open }) => (
       </Link>
     </MantineNavbar.Section>
 
-    <MantineNavbar.Section mt={16} grow component={ScrollArea} mx='-xs' px='xs'>
+    <MantineNavbar.Section mt={16} grow component={ScrollArea} mx='xs' px='xs'>
       <Links />
     </MantineNavbar.Section>
 

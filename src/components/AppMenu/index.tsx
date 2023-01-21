@@ -9,13 +9,10 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import { FC, useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
 
-interface IProps {
-  children: React.ReactNode;
-}
-
-const AppMenu: FC<IProps> = ({ children }) => {
+const AppMenu: FC = () => {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState<boolean>(false);
 
@@ -31,25 +28,25 @@ const AppMenu: FC<IProps> = ({ children }) => {
       padding='md'
       navbar={<Navbar open={opened} />}
       header={
-        <Header height={60}>
+        <Header height={45}>
           <MediaQuery largerThan='sm' styles={{ display: 'none' }}>
-            <Flex>
-              <Burger
-                m={7}
-                opened={opened}
-                onClick={handleOpen}
-                size='sm'
-                color={theme.colors.gray[0]}
-                mr='xl'
-              />
-            </Flex>
+            <Burger
+              m={7}
+              opened={opened}
+              onClick={handleOpen}
+              size='sm'
+              color={theme.colors.gray[0]}
+              mr='xl'
+            />
           </MediaQuery>
 
-          <Center>
-            <Title style={{ lineHeight: 2 }} order={2}>
-              The weather app
-            </Title>
-          </Center>
+          <MediaQuery smallerThan='sm' styles={{ display: 'none' }}>
+            <Flex align='center' justify='center'>
+              <Title style={{ lineHeight: 1.6 }} order={2}>
+                The weather app
+              </Title>
+            </Flex>
+          </MediaQuery>
         </Header>
       }
       styles={{
@@ -58,7 +55,9 @@ const AppMenu: FC<IProps> = ({ children }) => {
         },
       }}
     >
-      <Center>{children}</Center>
+      <Center>
+        <Outlet />
+      </Center>
     </AppShell>
   );
 };

@@ -10,6 +10,7 @@ import {
 } from 'react-router-dom';
 import { mockServer } from './mockServer';
 import { createBrowserHistory } from 'history';
+import '@testing-library/jest-dom/extend-expect';
 
 export const setupTests = () => {
   const { server } = mockServer();
