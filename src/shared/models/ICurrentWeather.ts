@@ -1,4 +1,4 @@
-export interface Coord {
+export interface ICoord {
   lon: number;
   lat: number;
 }
@@ -40,7 +40,7 @@ export interface Sys {
 }
 
 export interface ICurrentWeather {
-  coord: Coord;
+  coord: ICoord;
   weather: Weather[];
   base: string;
   main: Main;

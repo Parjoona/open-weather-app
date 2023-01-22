@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import { axiosBaseQuery } from '../../axiosConfig';
 import { currentWeatherUrl, baseUrl } from '../constants/urls';
-import { ICurrentWeather } from '../models/ICurrentWeather';
+import { ICurrentWeather, ICoord } from '../models/ICurrentWeather';
 
 const currentWeatherService = createApi({
   reducerPath: 'currentWeather',
@@ -10,17 +10,16 @@ const currentWeatherService = createApi({
   refetchOnReconnect: true,
   refetchOnMountOrArgChange: true,
   endpoints: (builder) => ({
-    current: builder.query<ICurrentWeather, string>({
+    current: builder.query<ICurrentWeather, ICoord>({
       // TODO: Should filter to remove duplicates (when two stations is close to eachother)
-      query: (q: string) => {
-        const deconstructQuery = { lat: 60.41629645, lon: 11.255544249678406 };
+      query: ({ lat, lon }: ICoord) => {
+        const eidsvoll = { lat: 60.41629645, lon: 11.255544249678406 };
 
         return {
           method: 'GET',
-          url: `${currentWeatherUrl(
-            deconstructQuery.lat,
-            deconstructQuery.lon
-          )}&appid=${import.meta.env.VITE_APP_OPEN_WEATHER_KEY}`,
+          url: `${currentWeatherUrl(lat, lon)}&appid=${
+            import.meta.env.VITE_APP_OPEN_WEATHER_KEY
+          }`,
         };
       },
     }),

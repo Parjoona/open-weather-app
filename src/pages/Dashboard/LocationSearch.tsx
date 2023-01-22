@@ -12,13 +12,20 @@ import { FC, forwardRef, useEffect, useState } from 'react';
 import { ISearchResponse } from 'shared/models/ISearch';
 import { useLazySearchQuery } from '../../shared/store/search.service';
 
-const LocationSearch: FC = () => {
+interface IProps {
+  setItemSubmit: (item: ISearchResponse | null) => void;
+}
+
+const LocationSearch: FC<IProps> = ({ setItemSubmit }) => {
   const [value, setValue] = useState<string>('');
   const [debounce] = useDebouncedValue(value, 300);
   const [call, { data, isLoading }] = useLazySearchQuery();
 
   useEffect(() => {
-    if (!debounce) return;
+    if (!debounce) {
+      setItemSubmit(null);
+      return;
+    }
 
     call(debounce);
   }, [debounce]);
@@ -64,10 +71,9 @@ const LocationSearch: FC = () => {
         transitionTimingFunction='ease'
         onChange={(event) => setValue(event)}
         onItemSubmit={(item) => {
-          const submitted = item as unknown as ISearchResponse &
-            AutocompleteItem;
+          const submitted = item as unknown as ISearchResponse;
 
-          console.log(submitted);
+          setItemSubmit(submitted);
         }}
       />
     </Flex>
