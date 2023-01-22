@@ -3,6 +3,8 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { baseUrl } from '../../shared/constants/urls';
 import { axiosBaseQuery } from '../../axiosConfig';
+import searchService from './search.service';
+import currentWeatherService from './currentWeather.service';
 
 export const baseApi = createApi({
   reducerPath: 'api',
@@ -15,10 +17,16 @@ export const baseApi = createApi({
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
+    [searchService.reducerPath]: searchService.reducer,
+    [currentWeatherService.reducerPath]: currentWeatherService.reducer,
   },
 
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(baseApi.middleware),
+  middleware: (getDefaultMiddleware) => [
+    ...getDefaultMiddleware(),
+    baseApi.middleware,
+    currentWeatherService.middleware,
+    searchService.middleware,
+  ],
 });
 
 // for refetchOnFocus/refetchOnReconnect

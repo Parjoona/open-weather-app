@@ -1,7 +1,6 @@
 import {
   AppShell,
   Burger,
-  Center,
   Flex,
   Header,
   MediaQuery,
@@ -23,10 +22,10 @@ const AppMenu: FC = () => {
 
   return (
     <AppShell
-      navbarOffsetBreakpoint='sm'
-      asideOffsetBreakpoint='sm'
       padding='md'
       navbar={<Navbar open={opened} />}
+      navbarOffsetBreakpoint='sm'
+      asideOffsetBreakpoint='sm'
       header={
         <Header height={45}>
           <MediaQuery largerThan='sm' styles={{ display: 'none' }}>
@@ -43,7 +42,7 @@ const AppMenu: FC = () => {
           <MediaQuery smallerThan='sm' styles={{ display: 'none' }}>
             <Flex align='center' justify='center'>
               <Title style={{ lineHeight: 1.6 }} order={2}>
-                The weather app
+                The weather blast
               </Title>
             </Flex>
           </MediaQuery>
@@ -55,9 +54,7 @@ const AppMenu: FC = () => {
         },
       }}
     >
-      <Center>
-        <Outlet />
-      </Center>
+      <Outlet />
     </AppShell>
   );
 };
