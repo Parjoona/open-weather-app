@@ -1,4 +1,5 @@
 import { useLocalStorage } from '@mantine/hooks';
+import { useEffect } from 'react';
 import { ICurrentWeather } from '../models/ICurrentWeather';
 import useHandleLikes from './useHandleLikes';
 
@@ -26,10 +27,12 @@ const useInitApp = () => {
     },
   ];
 
-  if (!initiated) {
-    defaultLikes.map((like) => addLike(like as ICurrentWeather));
-    setIsInitiated(true);
-  }
+  useEffect(() => {
+    if (!initiated) {
+      defaultLikes.map((like) => addLike(like as ICurrentWeather));
+      setIsInitiated(true);
+    }
+  }, []);
 };
 
 export default useInitApp;

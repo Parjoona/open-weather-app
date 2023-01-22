@@ -18,26 +18,30 @@ import {
   IconWindmill,
 } from '@tabler/icons';
 import { useCurrentQuery } from '../../../shared/store/currentWeather.service';
-import { useLocalStorage } from '@mantine/hooks';
+import { useLocalStorage, useMediaQuery } from '@mantine/hooks';
 import { ICoord } from '../../../shared/models/ICurrentWeather';
 import useHandleLikes from '../../../shared/hooks/useHandleLikes';
 import { useFetchDogQuery } from '../../../shared/store/getDogPicture.service';
 
 interface IProps {
-  /* Make the item a grid item */
+  /* Make the item a big item */
   inFocus?: boolean;
-
+  /* Coordinates for a position */
   coords: ICoord;
+  /* is a searched result for a position */
+  isSearch?: boolean;
 }
 
-const WeatherLocation: FC<IProps> = ({ inFocus, coords }) => {
+const WeatherLocation: FC<IProps> = ({ inFocus, coords, isSearch }) => {
   const { data, isLoading, isError } = useCurrentQuery(coords);
   const { data: dogPic } = useFetchDogQuery(String(coords.lat));
+  const isXS = useMediaQuery('(max-width: 769px)');
 
   const [value] = useLocalStorage({
     key: 'celsius-or-farenheit',
     defaultValue: 'celsius',
   });
+
   const { addLike, removeLike, isLiked } = useHandleLikes();
 
   const isCelsius = value === 'celsius';
@@ -62,9 +66,14 @@ const WeatherLocation: FC<IProps> = ({ inFocus, coords }) => {
   };
 
   return (
-    <Grid.Col span={inFocus ? 3 : 1}>
+    <Grid.Col span={inFocus || isXS ? 3 : 1}>
       <Card shadow='sm' p='lg' radius='md' withBorder>
         <LoadingOverlay visible={isLoading} overlayBlur={3} />
+        {isSearch && (
+          <Title order={2} size={24} align='center' mb='md'>
+            Searched location
+          </Title>
+        )}
         <Flex w='100%' align='center' justify='space-around' wrap='wrap'>
           <Card.Section
             display='flex'
@@ -131,15 +140,17 @@ const WeatherLocation: FC<IProps> = ({ inFocus, coords }) => {
           </Card.Section>
 
           {inFocus && (
-            <Card.Section
-              mt={{ xs: 'md', sm: 'md' }}
-              w={{ xs: '100%', sm: '100%', md: '50%' }}
-            >
+            <Card.Section mt='md' w={{ xs: '100%', sm: '100%', md: '50%' }}>
               <Flex
                 h='100%'
                 mih={200}
                 align='center'
-                justify={{ xs: 'center', sm: 'center', md: 'flex-end' }}
+                justify={{
+                  xs: 'center',
+                  sm: 'center',
+                  md: 'flex-end',
+                  xl: 'flex-end',
+                }}
               >
                 <Image
                   maw='50%'
