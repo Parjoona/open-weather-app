@@ -9,9 +9,11 @@ import {
 } from '@mantine/core';
 import { FC, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import useInitApp from '../../shared/hooks/useInitApp';
 import Navbar from './Navbar';
 
 const AppMenu: FC = () => {
+  useInitApp();
   const theme = useMantineTheme();
   const [opened, setOpened] = useState<boolean>(false);
 
