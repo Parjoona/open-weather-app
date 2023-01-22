@@ -12,16 +12,12 @@ const currentWeatherService = createApi({
   endpoints: (builder) => ({
     current: builder.query<ICurrentWeather, ICoord>({
       // TODO: Should filter to remove duplicates (when two stations is close to eachother)
-      query: ({ lat, lon }: ICoord) => {
-        const eidsvoll = { lat: 60.41629645, lon: 11.255544249678406 };
-
-        return {
-          method: 'GET',
-          url: `${currentWeatherUrl(lat, lon)}&appid=${
-            import.meta.env.VITE_APP_OPEN_WEATHER_KEY
-          }`,
-        };
-      },
+      query: ({ lat, lon }: ICoord) => ({
+        method: 'GET',
+        url: `${currentWeatherUrl(lat, lon)}&appid=${
+          import.meta.env.VITE_APP_OPEN_WEATHER_KEY
+        }`,
+      }),
     }),
   }),
 });

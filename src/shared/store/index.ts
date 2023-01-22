@@ -5,6 +5,7 @@ import { baseUrl } from '../../shared/constants/urls';
 import { axiosBaseQuery } from '../../axiosConfig';
 import searchService from './search.service';
 import currentWeatherService from './currentWeather.service';
+import dogPictureService from './getDogPicture.service';
 
 export const baseApi = createApi({
   reducerPath: 'api',
@@ -19,6 +20,7 @@ export const store = configureStore({
     [baseApi.reducerPath]: baseApi.reducer,
     [searchService.reducerPath]: searchService.reducer,
     [currentWeatherService.reducerPath]: currentWeatherService.reducer,
+    [dogPictureService.reducerPath]: dogPictureService.reducer,
   },
 
   middleware: (getDefaultMiddleware) => [
@@ -26,6 +28,7 @@ export const store = configureStore({
     baseApi.middleware,
     currentWeatherService.middleware,
     searchService.middleware,
+    dogPictureService.middleware,
   ],
 });
 
