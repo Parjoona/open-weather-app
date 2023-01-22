@@ -1,11 +1,4 @@
-import {
-  Flex,
-  Group,
-  Autocomplete,
-  Text,
-  AutocompleteItem,
-  Loader,
-} from '@mantine/core';
+import { Flex, Group, Autocomplete, Text, Loader } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
 import { IconSearch } from '@tabler/icons';
 import { FC, forwardRef, useEffect, useState } from 'react';
@@ -52,11 +45,12 @@ const LocationSearch: FC<IProps> = ({ setItemSubmit }) => {
       value: item.name,
     })) || [];
 
-  const Icon = isLoading ? <Loader size={16} /> : <IconSearch size={16} />;
+  const Icon = isLoading ? <Loader size={24} /> : <IconSearch size={24} />;
 
   return (
     <Flex align='flex-start' w='100%'>
       <Autocomplete
+        size='lg'
         w={400}
         maw={400}
         value={value}

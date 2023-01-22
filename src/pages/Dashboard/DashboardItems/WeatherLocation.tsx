@@ -4,12 +4,19 @@ import {
   Card,
   Flex,
   Grid,
+  Group,
   Image,
   LoadingOverlay,
   Text,
   Title,
 } from '@mantine/core';
-import { IconHeart, IconHeartPlus } from '@tabler/icons';
+import {
+  IconHeart,
+  IconHeartPlus,
+  IconWashTemperature1,
+  IconWind,
+  IconWindmill,
+} from '@tabler/icons';
 import { useCurrentQuery } from '../../../shared/store/currentWeather.service';
 import { useLocalStorage } from '@mantine/hooks';
 import { ICoord } from '../../../shared/models/ICurrentWeather';
@@ -58,71 +65,81 @@ const WeatherLocation: FC<IProps> = ({ inFocus, coords }) => {
     <Grid.Col span={inFocus ? 3 : 1}>
       <Card shadow='sm' p='lg' radius='md' withBorder>
         <LoadingOverlay visible={isLoading} overlayBlur={3} />
-        <Flex
-          w='100%'
-          align='center'
-          justify='space-around'
-          direction={{ sm: 'column', md: 'row' }}
-        >
-          <Card.Section w={{ sm: '100%', md: inFocus ? '50%' : '100%' }}>
-            <Flex direction='column' mih={275} justify='space-between'>
-              <Flex justify='space-between'>
-                <Text>{data?.name || '-'}</Text>
+        <Flex w='100%' align='center' justify='space-around' wrap='wrap'>
+          <Card.Section
+            display='flex'
+            style={{ flexDirection: 'column', justifyContent: 'space-between' }}
+            mih={275}
+            w={{ xs: '100%', sm: '100%', md: inFocus ? '50%' : '100%' }}
+          >
+            <Flex justify='space-between'>
+              <Text>{data?.name || '-'}</Text>
 
-                {data && (
-                  <ActionIcon onClick={handleLikeClick}>
-                    {hearted ? (
-                      <IconHeart color='red' opacity={0.6} size={24} />
-                    ) : (
-                      <IconHeartPlus opacity={0.6} size={24} />
-                    )}
-                  </ActionIcon>
-                )}
-              </Flex>
+              {data && (
+                <ActionIcon onClick={handleLikeClick}>
+                  {hearted ? (
+                    <IconHeart color='red' opacity={0.6} size={24} />
+                  ) : (
+                    <IconHeartPlus opacity={0.6} size={24} />
+                  )}
+                </ActionIcon>
+              )}
+            </Flex>
 
-              <Flex direction='column' align='center' my={36}>
-                {isError ? (
-                  <Title color='red' opacity={0.6} order={1} align='center'>
-                    Something went wrong
-                  </Title>
-                ) : (
-                  <Title order={1} align='center'>
-                    {convertToCorrectDegrees(data?.main.temp)}{' '}
-                    {isCelsius ? 'C' : 'F'}°
-                  </Title>
-                )}
-                <Title order={2} align='center' size={16}>
-                  {data?.weather[0].description || '-'}
+            <Flex direction='column' align='center' my={36}>
+              {isError ? (
+                <Title color='red' opacity={0.6} order={1} align='center'>
+                  Something went wrong
                 </Title>
-              </Flex>
+              ) : (
+                <Title order={1} align='center'>
+                  {convertToCorrectDegrees(data?.main.temp)}{' '}
+                  {isCelsius ? 'C' : 'F'}°
+                </Title>
+              )}
+              <Title order={2} align='center' size={16}>
+                {data?.weather[0].description || '-'}
+              </Title>
+            </Flex>
 
-              <Flex justify='space-between' gap='xs' wrap='wrap'>
-                {data?.wind.speed && (
-                  <Text opacity={0.8} size={12}>
+            <Flex justify='space-between' gap='xs' wrap='wrap'>
+              {data?.wind.speed && (
+                <Group spacing='xs'>
+                  <IconWindmill size={16} />
+                  <Text opacity={0.8} size={16}>
                     {data.wind.speed} speed
                   </Text>
-                )}
-                {data?.wind.gust && (
-                  <Text opacity={0.8} size={12}>
+                </Group>
+              )}
+              {data?.wind.gust && (
+                <Group spacing='xs'>
+                  <IconWind size={16} />
+                  <Text opacity={0.8} size={16}>
                     {data.wind.gust} gust
                   </Text>
-                )}
-                {data?.main.humidity && (
-                  <Text opacity={0.8} size={12}>
+                </Group>
+              )}
+              {data?.main.humidity && (
+                <Group spacing='xs'>
+                  <IconWashTemperature1 />
+                  <Text opacity={0.8} size={16}>
                     {data.main.humidity}% humidity
                   </Text>
-                )}
-              </Flex>
+                </Group>
+              )}
             </Flex>
           </Card.Section>
 
           {inFocus && (
-            <Card.Section mt={{ sm: 'md' }} w={{ sm: '100%', md: '50%' }}>
+            <Card.Section
+              mt={{ xs: 'md', sm: 'md' }}
+              w={{ xs: '100%', sm: '100%', md: '50%' }}
+            >
               <Flex
                 h='100%'
                 mih={200}
                 align='center'
-                justify={{ sm: 'center', md: 'flex-end' }}
+                justify={{ xs: 'center', sm: 'center', md: 'flex-end' }}
               >
                 <Image
                   maw='50%'

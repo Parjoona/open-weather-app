@@ -25,7 +25,6 @@ const AppMenu: FC = () => {
       padding='md'
       navbar={<Navbar open={opened} />}
       navbarOffsetBreakpoint='sm'
-      asideOffsetBreakpoint='sm'
       header={
         <Header height={45}>
           <MediaQuery largerThan='sm' styles={{ display: 'none' }}>
